@@ -1,8 +1,8 @@
-## TelegramBot
+# TelegramBot
 
-Bot desenvolvido para um projeto da faculdade, feito 100% em java
+### Bot desenvolvido para um projeto da faculdade, feito 100% em java
 
-# HOW USE
+## HOW USE
 
 git clone https://github.com/eduardaclx/TelegramBot.git
 
