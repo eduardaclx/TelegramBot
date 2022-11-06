@@ -51,8 +51,6 @@ public class DatabaseInformation {
         sb.append("SELECT * FROM Desktop JOIN Hardware ");
         sb.append("ON fkDesktop = idDesktop WHERE fkDesktop = ' ");
         sb.append(token).append("';");
-        
-        System.out.println("toaqui" + sb.toString());
 
         Desktop desktopInfo = jdbcTemplate.queryForObject(sb.toString(),
                 new DesktopRowMapper());
