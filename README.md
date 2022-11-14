@@ -1,25 +1,14 @@
-## Criando o seu bot
+# TelegramBot
 
-Link do vídeo: https://www.youtube.com/watch?v=eawDe1-jMDM
+Bot desenvolvido para um projeto de faculdade.
 
-Adicione a conta ```botFather``` no seu Telegram. Este bot exibirá os comandos para voce criar o bot. 
+## HOW USE
 
-    @botfather
+git clone https://github.com/eduardaclx/TelegramBot.git
 
-Crie o bot com o nome desejado
+Abra em alguma IDE: Clean and Build - Build with dependencies - Run
 
-BotName   ```Canal Feltex```
-UserName  ```feltexUserName_bot```
+Acesse https://t.me/NoCrash_bot
 
-
-# Resposta do Bot
-
-O bot responde aos comandos
-    
-    /help
-    olá
-    data
-    hora
-    quem é você
-
-
+### Linguagens usadas:
+Java
