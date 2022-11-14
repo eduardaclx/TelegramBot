@@ -30,13 +30,25 @@ public class NoCrashBot extends TelegramLongPollingBot {
             SendMessage sm = new SendMessage();
             SendMessage wel = new SendMessage();
             StringBuilder sb = new StringBuilder();
-            String answear = "Mensagem Inválida  :injured:";
+            String answear = "Desculpe, comando indevido  :injured:";
 
             if (update.getMessage().getText().equals("/start")) {
                 wel.setChatId(update.getMessage().getChatId().toString());
                 wel.setText(EmojiParser.parseToUnicode(
                         String.format("Seja bem vindo(a) %s!", update.getMessage().getFrom().getFirstName()
                         )));
+                try {
+                    execute(wel);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+                sendMessages(welcomeMessage(), update.getMessage().getChatId().toString());
+                answear = "";
+            }
+            
+            if (update.getMessage().getText().equals("/menu")) {
+                wel.setChatId(update.getMessage().getChatId().toString());
+                
                 try {
                     execute(wel);
                 } catch (TelegramApiException e) {
@@ -58,14 +70,14 @@ public class NoCrashBot extends TelegramLongPollingBot {
 
                     sendMessages(welcomeMessage(), update.getMessage().getChatId().toString());
                 } else {
-                    answear = "Token inválido";
+                    answear = "Token errado!";
                 }
             }
 
             if (update.getMessage().getText().equals("/computerinfo") || update.getMessage().getText().equals("/cpudiario")
                     || update.getMessage().getText().equals("/cpusemanal") && Objects.isNull(this.token)) {
                 sb.append("Primeiro digite o TOKEN da sua máquina");
-                sb.append("\n\nps: ele é gerado quando você cadastra uma desktop em nosso site ");
+                sb.append("\n\nps: Gerado ao cadastrar sua desktop em nosso site");
                 sb.append("digite /info para mais informações");
                 this.controladorToken = true;
                 answear = sb.toString();
@@ -74,7 +86,7 @@ public class NoCrashBot extends TelegramLongPollingBot {
             if (update.getMessage().getText().equals("/cpudiario") && Objects.nonNull(this.token)) {
                 System.out.println(token);
                 try {
-                    answear = "A média de uso do seu processador hoje foi de " + di.usoProcessadorDiario(token);
+                    answear = "O uso do seu processador hoje foi de " + di.usoProcessadorDiario(token) + "%";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,7 +94,8 @@ public class NoCrashBot extends TelegramLongPollingBot {
 
             if (update.getMessage().getText().equals("/cpusemanal") && Objects.nonNull(this.token)) {
                 try {
-                    answear = "A média de uso semanal do seu processador foi de " + di.usoProcessadorSemanal(token);
+                    answear = "O uso do seu processador nessa semana foi de " +
+                            di.usoProcessadorSemanal(token) + "%";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -98,27 +111,29 @@ public class NoCrashBot extends TelegramLongPollingBot {
 
             if (update.getMessage().getText().equals("/info")) {
                 
-                sb.append("NoCrash é um software de gerenciamento de hardware, ");
-                sb.append("com ele é possível ver em tempo real a situação da ");
-                sb.append("sua máquina, te avisando quando alguma peça está sobrecarregada.  :collision:");
-                sb.append("\n\nVocê ainda pode contar com as nossas recomendações ");
-                sb.append("totalmente personalizadas para seu tipo de uso!");
-                sb.append("\n\nPara ter acesso total aos nossos serviços, acesse o site: \n");
+                sb.append("| NoCrash - Software de Gerenciamento de Hardwares |");
+                sb.append("\n\nCom ele se torna possível ver em tempo real a situação da ");
+                sb.append("sua desktop, te avisando quando alguma parte do hardware fica sobrecarregada."
+                        + "  :collision:");
+                sb.append("\n\nNossos clientes tem acesso as nossas dicas de hardware ");
+                sb.append("totalmente personalizadas!");
+                sb.append("\n\nVeja mais em: \n");
                 sb.append("http://localhost:3333/dashboard.html  :pushpin:");
                 answear = sb.toString();
             }
 
             if (update.getMessage().getText().equals("/logout")) {
                 sb.append("Deslogado com sucesso!");
-                sb.append("\n\nAgradecemos por usar nossos serviços!  :blush:");
-                this.token = null;
+                sb.append("\n\nAgradecemos por usar nosso sistema!  :blush:");
+                token = null;
+                this.controladorToken = false;
                 answear = sb.toString();
             }
 
             sm.setChatId(update.getMessage().getChatId().toString());
             sm.setText(EmojiParser.parseToUnicode(answear));
 
-            if (answear.equals("Mensagem Inválida  :injured")) {
+            if (answear.equals("Desculpe, comando indevido  :injured")) {
                 sendMessages(welcomeMessage(), update.getMessage().getChatId().toString());
             }
             try {
@@ -146,12 +161,12 @@ public class NoCrashBot extends TelegramLongPollingBot {
         StringBuilder sb = new StringBuilder();
 
         sb.append("\nEu sou o Marcelo :bot_face:\n\nComo posso te ajudar hoje?  :thinking: :thought_balloon:");
-        sb.append("\n\n/computerinfo - Veja as informações do seu computador em tempo real")
+        sb.append("\n\n/computerinfo - Veja o status do seu computador em tempo real")
                 .append("  :computer:");
-        sb.append("\n\n/cpudiario - Ver a média diária do uso do seu processador  :envelope_with_arrow:");
-        sb.append("\n\n/cpusemanal - Ver a média semanal do uso do seu processador    :email:");
+        sb.append("\n\n/cpudiario - Veja o uso do seu processador hoje  :envelope_with_arrow:");
+        sb.append("\n\n/cpusemanal - Veja o uso do seu processador ness semana    :email:");
         sb.append("\n\n/info - Como funciona o NoCrash");
-        sb.append("\n\n/logout - Deslogar da máquina");
+        sb.append("\n\n/logout - Deslogar desktop");
         return sb.toString();
     }
 }

@@ -60,13 +60,12 @@ public class Desktop {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nNome da máquina:  ").append(nomeDesktop.toUpperCase());
+        sb.append("\nNome da desktop:  ").append(nomeDesktop.toUpperCase());
         sb.append("\n\nProcessador:  ").append(nomeProcessador.toUpperCase());
         sb.append("\n\nFabricante:  ").append(fabricante.toUpperCase());
-        sb.append("\n\nFrequência:  ").append(frequencia);
+        sb.append("\n\nFrequencia:  ").append(frequencia);
         sb.append("\n\nQuantidade de discos:  ").append(qntDisco);
-        sb.append("\n\nMemória total:  ").append(memoriaTotal);
+        sb.append("\n\nMemoria total:  ").append(memoriaTotal);
         return sb.toString();
     }
-    
 }
